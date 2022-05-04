@@ -15,13 +15,13 @@ def concurrent_test():
 
     # Import requirements
     from concurrent.futures import as_completed, ProcessPoolExecutor
-    from progress import progress_stdout
+    from progress_stdout import stdout_standard
 
     # Define the input data
     DATA = [task for task in range(0, 10)]
 
     # Initialize the status bar
-    state = progress_stdout(len(DATA))
+    state = stdout_standard(len(DATA))
     state.initialize()
 
     # Execute tasks
@@ -43,13 +43,13 @@ async def asyncio_test():
         # Import requirements
         from asyncio import as_completed, get_event_loop, wrap_future
         from concurrent.futures import ProcessPoolExecutor
-        from progress import progress_stdout_asyncio
+        from progress_stdout import stdout_asyncio
 
         # Define the input data
         DATA = [task for task in range(0, 10)]
 
         # Initialize the status bar
-        state = progress_stdout_asyncio(len(DATA))
+        state = stdout_asyncio(len(DATA))
         await state.initialize()
 
         # Execute tasks
@@ -65,7 +65,6 @@ async def asyncio_test():
                 result = await future
                 await state.update()
                 
-
 
 # Run the program driver
 if __name__ == "__main__":

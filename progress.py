@@ -2,7 +2,7 @@ from numpy import linspace, average
 from time import perf_counter, strftime, gmtime
 
 
-class progress():
+class progress_standard():
     def __init__(self, iterations, length = 25, marker = '█'):
         self.iterations = iterations
         self.length = length
@@ -125,7 +125,7 @@ class progress():
         pass
 
 
-class progress_asyncio(progress):
+class progress_asyncio(progress_standard):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
@@ -220,75 +220,3 @@ class progress_asyncio(progress):
 
     async def refresh(self, progression, completion, estimation, elapsed):
         pass
-
-
-class progress_stdout(progress):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-
-    def refresh(self, progression, completion, estimation, elapsed):
-        """
-        Refresh the status message with the attributes given
-
-        Arguments:
-                self (progress): The class object operated on
-                progression (integer): Progression bar string
-                completion (float): Percent completed iterations
-                estimation (string): Estimated time remaining in seconds
-                elapsed (string): Time elapsed since start initialization
-
-        Returns:
-                None
-
-        Raises:
-                None
-        """
-
-        # Generate the formatted strings for the task completion and
-        # the (Elapsed/Estimated) timing events
-        ratio = f"({self.iteration:03d}/{self.iterations:03d})"
-        timing = f"[{elapsed}, {estimation}]"
-
-        # Write out the updated status information
-        print(f"\t{completion:5.1f}% |{progression}| {ratio} {timing}", end = '\r')
-
-        # Check for end of iterations, which requires a flush
-        if self.iteration == self.iterations:
-            print('')
-
-
-class progress_stdout_asyncio(progress_asyncio):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-
-    async def refresh(self, progression, completion, estimation, elapsed):
-        """
-        Refresh the status message with the attributes given
-
-        Arguments:
-                self (progress): The class object operated on
-                progression (integer): Progression bar string
-                completion (float): Percent completed iterations
-                estimation (string): Estimated time remaining in seconds
-                elapsed (string): Time elapsed since start initialization
-
-        Returns:
-                None
-
-        Raises:
-                None
-        """
-
-        # Generate the formatted strings for the task completion and
-        # the (Elapsed/Estimated) timing events
-        ratio = f"({self.iteration:03d}/{self.iterations:03d})"
-        timing = f"[{elapsed}, {estimation}]"
-
-        # Write out the updated status information
-        print(f"\t{completion:5.1f}% |{progression}| {ratio} {timing}", end = '\r')
-
-        # Check for end of iterations, which requires a flush
-        if self.iteration == self.iterations:
-            print('')
