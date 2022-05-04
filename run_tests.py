@@ -1,13 +1,16 @@
 import sys
 
 
-# Define the concurrent testing functions
-def concurrent_function(input_data):
+# Define the function being processed
+def testing_function(input_data):
     from time import sleep
     from random import randint
     sleep(randint(1, 3))
+    return input_data
 
 
+# Define the function testing 
+# concurrent-based execution
 def concurrent_test():
 
     # Import requirements
@@ -24,7 +27,7 @@ def concurrent_test():
     # Execute tasks
     with ProcessPoolExecutor(max_workers = 4) as executor:
         futures = [
-            executor.submit(concurrent_function, data)
+            executor.submit(testing_function, data)
             for data in DATA
         ]
 
@@ -33,34 +36,35 @@ def concurrent_test():
             state.update()
 
 
-# Define the asyncio testing functions
-async def asyncio_function(input_data):
-    from asyncio import sleep
-    from random import randint
-    await sleep(randint(1, 3))
-
-
+# Define the function testing
+# asyncio-based execution
 async def asyncio_test():
 
         # Import requirements
-        from asyncio import as_completed
+        from asyncio import as_completed, get_event_loop, wrap_future
+        from concurrent.futures import ProcessPoolExecutor
         from progress import progress_stdout_asyncio
 
         # Define the input data
         DATA = [task for task in range(0, 10)]
 
-        # Define the tasks
-        tasks = [asyncio_function(data) for data in DATA]
-
-        # Start a progress bar for the values
-        # across each collection process
-        state = progress_stdout_asyncio(len(tasks))
+        # Initialize the status bar
+        state = progress_stdout_asyncio(len(DATA))
         await state.initialize()
 
-        # Launch each task and retrieve the results
-        for task in as_completed(tasks):
-            result = await task
-            await state.update()
+        # Execute tasks
+        with ProcessPoolExecutor(max_workers = 4) as executor:
+            loop = get_event_loop()
+
+            futures = [
+                wrap_future(executor.submit(testing_function, data), loop = loop)
+                for data in DATA
+            ]
+
+            for future in as_completed(futures):
+                result = await future
+                await state.update()
+                
 
 
 # Run the program driver
