@@ -23,4 +23,5 @@ Shown above is an example in the `progress_stdout.py` file, where the standard o
 ## Requirements
 
 <img src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLgwjF2JFQ-jvZn53x4bIhemYv7dLQKROIVg&usqp=CAU" alt ="" width="20%" height="20%">
+
 The only external dependency is NumPy, which is utilized in multiple parts of `progress.py`, making it a hard requirement for the code.
