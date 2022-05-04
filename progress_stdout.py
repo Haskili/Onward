@@ -66,7 +66,7 @@ class stdout_asyncio(progress_asyncio):
         timing = f"[{elapsed}, {estimation}]"
 
         # Write out the updated status information
-        print(f"\r\t[25m{completion:5.1f}% |{progression}| {ratio} {timing}", end = '')
+        print(f"\r\t{completion:5.1f}% |{progression}| {ratio} {timing}", end = '')
 
         # Check for end of iterations, which requires a flush
         if self.iteration == self.iterations:
