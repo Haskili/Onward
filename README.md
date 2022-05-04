@@ -11,13 +11,15 @@
 
 ## Overview
 
-Onward is an adaptive Python progress-bar designed to be easily re-implemented in whatever (`concurrent`/`asyncio`/etc.) application it's needed in. All that's required of the developer is to derive their own class from the base class in `progess.py` (based on the libraries being used), and then update the `refresh(...)` member function as needed to pipe output to whatever source is desired. 
+Onward is an adaptive Python progress-bar designed to be easily re-implemented in whatever (`concurrent` / `asyncio` / etc.) application it's needed in. All that's required of the developer is to derive their own class from the base class in `progess.py` (based on the libraries being used), and then update the `refresh(...)` member function as needed to pipe output to whatever source is desired.
+
+The progress bar provides information regarding the percent of iterations completed, a bar indicating the percent completed, both the number of iterations completed as well as the total iterations, and the time elapsed versus the estimated time remaining.
 
 <br>
 <p align="center"><img src = "https://i.imgur.com/ELo4Jf0.gif" alt ="" width="90%"></p>
 <br>
 
-Shown above is a demonstration of `run_tests.py`, which utilizes the `progress_stdout.py` example. In this example, the STDOUT is used as the chosen output device for the progress bar, with both `concurrent` and `asyncio` examples provided. To verify, please call the provided `run_tests.py` with the argument(s) `-c` and `-a` for testing methods using the `concurrent` and `asyncio` libraries respectively.
+Shown above is a demonstration of `run_tests.py`, which utilizes the `progress_stdout.py` example. In this example, the STDOUT is used as the chosen output device for the progress bar, with both `concurrent` and `asyncio` versions provided. To verify, please call the provided `run_tests.py` with the argument(s) `-c` and `-a` for testing the `concurrent` and `asyncio` versions respectively.
 <br></br>
 
 ## Requirements
